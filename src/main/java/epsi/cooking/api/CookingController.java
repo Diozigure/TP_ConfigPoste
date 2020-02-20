@@ -1,7 +1,7 @@
 package epsi.cooking.api;
 
-import java.util.List;
-
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +13,16 @@ import epsi.cooking.utils.DataUtils;
 @CrossOrigin(origins = "http://localhost:4200")
 public class CookingController {
 	@GetMapping("/recettes")
-	public List<Recette> getRecette(){
-		return DataUtils.getRecettes();
+	public String getRecette(){
+		JSONArray json = new JSONArray();
+		for (Recette recette : DataUtils.getRecettes()) {
+			JSONObject jsonObj = new JSONObject();
+			jsonObj.put("ID", recette.getId());
+			jsonObj.put("NAME", recette.getName());
+			jsonObj.put("DESCRIPTION", recette.getDescription());
+			json.put(jsonObj);
+		}
+		
+		return json.toString();
 	}
 }
