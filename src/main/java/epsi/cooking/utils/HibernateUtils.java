@@ -1,5 +1,7 @@
 package epsi.cooking.utils;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
@@ -21,7 +23,7 @@ public class HibernateUtils {
             return metadata.getSessionFactoryBuilder().build();
         } catch (Throwable ex) {
          
-            System.err.println("Initial SessionFactory creation failed." + ex);
+        	Logger.getLogger(HibernateUtils.class).log(Level.ERROR, ex.getMessage());
             throw new ExceptionInInitializerError(ex);
         }
     }
